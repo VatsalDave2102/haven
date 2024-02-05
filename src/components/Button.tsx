@@ -1,9 +1,9 @@
 import React from "react";
 
 interface Props {
-  bgColor: string;
-  textColor: string;
-  className: string;
+  bgColor?: string;
+  textColor?: string;
+  className?: string;
   children: React.ReactNode;
 }
 

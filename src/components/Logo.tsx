@@ -1,9 +1,9 @@
 interface Props {
-  px: string;
+  width: string;
 }
 
-const Logo = ({ px }: Props) => {
-  return <div className={`${px}`}>Logo</div>;
+const Logo: React.FC<Props> = ({ width }) => {
+  return <div className={`${width}`}>Logo</div>;
 };
 
 export default Logo;

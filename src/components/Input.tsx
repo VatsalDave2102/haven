@@ -1,7 +1,6 @@
 import React, { forwardRef, useId } from "react";
 
 interface Props {
-  children: React.ReactNode;
   label: string;
 }
 
