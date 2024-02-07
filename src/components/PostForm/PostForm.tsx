@@ -5,11 +5,13 @@ import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../store/hooks";
 import { Models } from "appwrite";
+import toast from "react-hot-toast";
 
 export interface PostValues {
   title: string;
   slug: string;
   content: string;
+  imageFile: FileList;
   featuredImage: string;
   status: string;
   userId: string;
@@ -23,34 +25,37 @@ const PostForm: React.FC<Props> = ({ post }) => {
     useForm<PostValues>({
       defaultValues: {
         title: post?.title || "",
-        slug: post?.slug || "",
+        slug: post?.$id || "",
         content: post?.content || "",
-        status: post?.status || "",
+        status: post?.status || "active",
       },
     });
 
   const navigate = useNavigate();
   const userData = useAppSelector((state) => state.auth.userData);
 
-  const submit = async (data: Post) => {
+  const submit = async (data: PostValues) => {
     if (post) {
-      const file = data.image[0]
-        ? await appwriteService.uploadFile(data.image[0])
+      const file = data.imageFile[0]
+        ? await appwriteService.uploadFile(data.imageFile[0])
         : null;
 
       if (file) {
         appwriteService.deleteFile(post.featuredImage);
       }
+
       const dbPost = await appwriteService.updatePost(post.$id, {
         ...data,
         featuredImage: file ? file.$id : undefined,
       });
+
       if (dbPost) {
+        toast.success("Article updated!");
         navigate(`/post/${dbPost.$id}`);
       }
     } else {
-      const file = data.image[0]
-        ? await appwriteService.uploadFile(data.image[0])
+      const file = data.imageFile[0]
+        ? await appwriteService.uploadFile(data.imageFile[0])
         : null;
 
       if (file) {
@@ -60,7 +65,10 @@ const PostForm: React.FC<Props> = ({ post }) => {
           ...data,
           userId: String(userData?.$id),
         });
+
         if (dbPost) {
+          toast.success("Article added!");
+
           navigate(`/post/${dbPost.$id}`);
         }
       }
@@ -68,11 +76,11 @@ const PostForm: React.FC<Props> = ({ post }) => {
   };
 
   const slugTransform = useCallback((value: string) => {
-    if (value && typeof value === "string") {
+    if (value) {
       return value
         .trim()
         .toLowerCase()
-        .replace(/^[a-zA-Z\d\s]+/g, "-")
+        .replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
     }
     return "";
@@ -89,6 +97,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
       subscription.unsubscribe();
     };
   }, [watch, slugTransform, setValue]);
+
   return (
     <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
       <div className="w-2/3 px-2">
@@ -121,7 +130,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
           type="file"
           className="mb-4"
           accept="image/png , image/jpg, image/jpeg, image/gif"
-          {...register("featuredImage", {
+          {...register("imageFile", {
             required: !post,
           })}
         />

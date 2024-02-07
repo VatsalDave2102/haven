@@ -21,17 +21,20 @@ const Post = () => {
   useEffect(() => {
     if (slug) {
       appwriteService.getPost(slug).then((post) => {
-        if (post) {
-          setPost(post as Post);
-        } else {
-          navigate("/");
-        }
+        if (post) setPost(post as Post);
+        else navigate("/");
       });
-    } else {
+    } else navigate("/");
+  }, [slug, navigate]);
+
+  const deletePost = async () => {
+    const result = await appwriteService.deletePost(post?.$id as string);
+    if (result) {
+      await appwriteService.deleteFile(post?.featuredImage as string);
       navigate("/");
     }
-  }, [slug, navigate]);
-  return (
+  };
+  return post ? (
     <div className="py-8">
       <Container>
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
@@ -50,12 +53,7 @@ const Post = () => {
                   Edit
                 </Button>
               </Link>
-              <Button
-                className="bg-red-500"
-                onClick={() => {
-                  appwriteService.deletePost(post?.slug as string);
-                }}
-              >
+              <Button className="bg-red-500" onClick={deletePost}>
                 Delete
               </Button>
             </div>
@@ -67,7 +65,7 @@ const Post = () => {
         </div>
       </Container>
     </div>
-  );
+  ) : null;
 };
 
 export default Post;

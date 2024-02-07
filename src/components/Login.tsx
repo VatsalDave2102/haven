@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login as authLogin } from "../store/authSlice";
 import { Button, Input, Logo } from "./index";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../store/hooks";
+import { AppwriteException } from "appwrite";
+import toast from "react-hot-toast";
 
 interface LoginFormValues {
   email: string;
@@ -14,21 +15,27 @@ interface LoginFormValues {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<LoginFormValues>();
-  const [error, setError] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormValues>();
 
   const login = async (data: LoginFormValues) => {
-    setError("");
     try {
       const session = await authService.login(data);
 
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(authLogin(userData));
+        if (userData) {
+          dispatch(authLogin(userData));
+          toast.success("Successfully logged in!");
+        }
         navigate("/");
       }
     } catch (error) {
-      setError(error as string);
+      const toastError = error as AppwriteException;
+      toast.error(toastError.message);
     }
   };
   return (
@@ -51,7 +58,6 @@ const Login = () => {
             Sign up
           </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit(login)} className="mt-8">
           <div className="space-y-5">
@@ -59,6 +65,7 @@ const Login = () => {
               label="Email: "
               placeholder="Enter your email"
               type="email"
+              className={errors.email && `ring-2 ring-red-400 ring-inset`}
               {...register("email", {
                 required: true,
                 validate: {
@@ -74,6 +81,7 @@ const Login = () => {
               label="Password: "
               placeholder="Enter your password"
               type="password"
+              className={errors.password && `ring-2 ring-red-400 ring-inset`}
               {...register("password", {
                 required: true,
               })}

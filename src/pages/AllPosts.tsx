@@ -7,11 +7,17 @@ const AllPosts = () => {
   const [posts, setPosts] = useState<Models.Document[]>([]);
 
   useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-      if (posts) {
+    let ignore = false;
+    async function fetchPosts() {
+      const posts = await appwriteService.getPosts([]);
+      if (posts && !ignore) {
         setPosts(posts.documents);
       }
-    });
+    }
+    fetchPosts();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   return (

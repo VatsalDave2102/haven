@@ -1,10 +1,11 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appwrite/auth";
 import { login } from "../store/authSlice";
 import { Button, Input, Logo } from ".";
 import { useAppDispatch } from "../store/hooks";
 import { useForm } from "react-hook-form";
+import { AppwriteException } from "appwrite";
+import toast from "react-hot-toast";
 
 interface SignupFormValues {
   name: string;
@@ -14,21 +15,27 @@ interface SignupFormValues {
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
   const dispatch = useAppDispatch();
-  const { register, handleSubmit } = useForm<SignupFormValues>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormValues>();
 
   const create = async (data: SignupFormValues) => {
-    setError("");
     try {
       const session = await authService.createAccount(data);
       if (session) {
         const userData = await authService.getCurrentUser();
-        if (userData) dispatch(login(userData));
+        if (userData) {
+          dispatch(login(userData));
+          toast.success("Account created successfully!");
+        }
         navigate("/");
       }
     } catch (error) {
-      setError(error as string);
+      const toastError = error as AppwriteException;
+      toast.error(toastError.message);
     }
   };
   return (
@@ -51,9 +58,8 @@ const Signup = () => {
             Log in
           </Link>
         </p>
-        {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
 
-        <form onSubmit={handleSubmit(create)}>
+        <form onSubmit={handleSubmit(create)} className="mt-8">
           <div className="space-y-5">
             <Input
               label="Full Name: "
@@ -61,10 +67,12 @@ const Signup = () => {
               {...register("name", {
                 required: true,
               })}
+              className={errors.name && `ring-2 ring-red-400 ring-inset`}
             />
             <Input
               label="Email: "
               placeholder="Enter your email"
+              className={errors.email && `ring-2 ring-red-400 ring-inset`}
               type="email"
               {...register("email", {
                 required: true,
@@ -81,11 +89,19 @@ const Signup = () => {
               label="Password: "
               placeholder="Enter your password"
               type="password"
+              className={errors.password && `ring-2 ring-red-400 ring-inset`}
               {...register("password", {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
+            {/* {
+              errors.password && <p >{errors.password}</p>
+            } */}
+            <Button
+              type="submit"
+              className="w-full"
+              bgColor="bg-gray-300 hover:bg-gray-500 transition"
+            >
               Create account
             </Button>
           </div>

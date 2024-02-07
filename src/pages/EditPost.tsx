@@ -13,25 +13,33 @@ const EditPost = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) {
+    let ignore = false;
+
+    async function fetchPost() {
+      if (slug) {
+        const post = await appwriteService.getPost(slug);
+
+        if (post && !ignore) {
           setPost(post as Post);
-        } else {
-          navigate("/");
         }
-      });
-    } else {
-      navigate("/");
+      } else {
+        navigate("/");
+      }
     }
+    fetchPost();
+
+    return () => {
+      ignore = true;
+    };
   }, [slug, navigate]);
-  return (
+
+  return post ? (
     <div className="py-8">
       <Container>
         <PostForm post={post as Post} />
       </Container>
     </div>
-  );
+  ) : null;
 };
 
 export default EditPost;

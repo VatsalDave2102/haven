@@ -1,5 +1,6 @@
-import { Account, Client, ID } from "appwrite";
+import { Account, AppwriteException, Client, ID } from "appwrite";
 import conf from "../conf/conf";
+import { throwError } from "./error";
 
 export class AuthService {
   client = new Client();
@@ -37,7 +38,7 @@ export class AuthService {
         return userAccount;
       }
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -45,7 +46,7 @@ export class AuthService {
     try {
       return await this.account.createEmailSession(email, password);
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -55,7 +56,7 @@ export class AuthService {
       if (currentUser) return currentUser;
       return null;
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -63,7 +64,7 @@ export class AuthService {
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 }

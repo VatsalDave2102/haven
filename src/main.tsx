@@ -7,12 +7,13 @@ import store from "./store/store.ts";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 import Protected from "./components/AuthLayout.tsx";
-import Login from "./components/Login.tsx";
-import Signup from "./components/Signup.tsx";
+import Login from "./pages/Login.tsx";
+import Signup from "./pages/Signup.tsx";
 import AllPosts from "./pages/AllPosts.tsx";
 import AddPost from "./pages/AddPost.tsx";
 import EditPost from "./pages/EditPost.tsx";
 import Post from "./pages/Post.tsx";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
+      <Toaster />
       <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>

@@ -1,5 +1,13 @@
-import { Client, ID, Databases, Storage, Query } from "appwrite";
+import {
+  Client,
+  ID,
+  Databases,
+  Storage,
+  Query,
+  AppwriteException,
+} from "appwrite";
 import conf from "../conf/conf";
+import { throwError } from "./error";
 
 export class Service {
   client = new Client();
@@ -37,7 +45,7 @@ export class Service {
         { title, content, featuredImage, status, userId }
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -52,7 +60,7 @@ export class Service {
     }: {
       title: string;
       content: string;
-      featuredImage: string;
+      featuredImage: string | undefined;
       status: string;
     }
   ) {
@@ -64,7 +72,7 @@ export class Service {
         { title, content, featuredImage, status }
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -76,7 +84,7 @@ export class Service {
         slug
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -88,7 +96,7 @@ export class Service {
         slug
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -100,7 +108,7 @@ export class Service {
         queries
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -113,7 +121,7 @@ export class Service {
         file
       );
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 
@@ -121,7 +129,7 @@ export class Service {
     try {
       await this.storage.deleteFile(conf.appwriteBucketID, fileId);
     } catch (error) {
-      throw new Error(error as string);
+      throwError(error as AppwriteException);
     }
   }
 

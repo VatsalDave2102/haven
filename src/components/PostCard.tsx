@@ -16,7 +16,7 @@ const PostCard: React.FC<Props> = ({ $id, title, featuredImage }) => {
             alt={title}
           />
         </div>
-        <h2></h2>
+        <h2>{title}</h2>
       </div>
     </Link>
   );
