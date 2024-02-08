@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .navbar_button {
+    @apply inline-block duration-300 hover:text-primary  text-slate-400 font-bold relative;
+  }
+  .navbar_button::after {
+    @apply content-[''] bg-pink-400 h-[3px] w-0 left-0 -bottom-[5px] rounded-xl absolute duration-300;
+  }
+  .navbar_button:hover::after {
+    @apply w-full;
+  }
+  .card {
+    @apply duration-300 relative;
+  }
+  .card::after {
+    @apply content-[''] bg-pink-400 h-[3px] w-0 left-0 bottom-0 rounded-sm absolute duration-300;
+  }
+  .card:hover::after {
+    @apply w-full;
+  }
+}

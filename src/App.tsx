@@ -30,7 +30,7 @@ function App() {
 
   if (loading) return <h1>Loading</h1>;
   return (
-    <div className="h-screen flex flex-wrap content-between bg-gray-400">
+    <div className="h-screen flex flex-wrap content-between bg-white overflow-x-auto">
       <div className="w-full block">
         <Header />
         <main>
