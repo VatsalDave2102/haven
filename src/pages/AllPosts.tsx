@@ -33,6 +33,8 @@ const AllPosts = () => {
                 title={post.title}
                 $id={post.$id}
                 featuredImage={post.featuredImage}
+                createdAt={post.$createdAt}
+                author={post.userName}
               />
             </div>
           ))}

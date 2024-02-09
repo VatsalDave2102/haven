@@ -7,11 +7,17 @@ const Home = () => {
   const [posts, setPosts] = useState<Models.Document[]>([]);
 
   useEffect(() => {
-    appwriteService.getPosts([]).then((posts) => {
-      if (posts) {
+    let ignore = false;
+    async function fetchPosts() {
+      const posts = await appwriteService.getPosts([]);
+      if (posts && !ignore) {
         setPosts(posts.documents);
       }
-    });
+    }
+    fetchPosts();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   if (posts.length === 0) {
@@ -42,6 +48,8 @@ const Home = () => {
                 title={post.title}
                 $id={post.$id}
                 featuredImage={post.featuredImage}
+                createdAt={post.$createdAt}
+                author={post.userName}
               />
             </div>
           ))}

@@ -15,7 +15,6 @@ const Post = () => {
   const navigate = useNavigate();
 
   const userData = useAppSelector((state) => state.auth.userData);
-
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const Post = () => {
         <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
           <img
             src={String(
-              appwriteService.getFilePreview(post?.featuredImage as string)
+              appwriteService.getFilePreview(post.featuredImage as string)
             )}
             alt={post?.title}
             className="rounded-xl"
@@ -48,7 +47,7 @@ const Post = () => {
 
           {isAuthor && (
             <div className="absolute right-6 top-6">
-              <Link to={`/edit-post/${post?.$id}`}>
+              <Link to={`/edit-post/${post.$id}`}>
                 <Button bgColor="bg-green-500" className="mr-3">
                   Edit
                 </Button>
@@ -60,8 +59,8 @@ const Post = () => {
           )}
         </div>
         <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post?.title}</h1>
-          <div className="browser-css">{parse(post?.content as string)}</div>
+          <h1 className="text-2xl font-bold">{post.title}</h1>
+          <div className="browser-css">{parse(post.content as string)}</div>
         </div>
       </Container>
     </div>

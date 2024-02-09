@@ -29,6 +29,7 @@ export class Service {
     featuredImage,
     status,
     userId,
+    userName,
   }: {
     title: string;
     slug: string;
@@ -36,13 +37,14 @@ export class Service {
     featuredImage: string;
     status: string;
     userId: string;
+    userName: string;
   }) {
     try {
       return await this.databases.createDocument(
         conf.appwriteDatabaseID,
-        conf.appwriteCollectionID,
+        conf.appwriteArticlesCollectionID,
         slug,
-        { title, content, featuredImage, status, userId }
+        { title, content, featuredImage, status, userId, userName }
       );
     } catch (error) {
       throwError(error as AppwriteException);
@@ -65,10 +67,9 @@ export class Service {
     }
   ) {
     try {
-      // TODO: string value extend
       return await this.databases.updateDocument(
         conf.appwriteDatabaseID,
-        conf.appwriteCollectionID,
+        conf.appwriteArticlesCollectionID,
         slug,
         { title, content, featuredImage, status }
       );
@@ -81,7 +82,7 @@ export class Service {
     try {
       return await this.databases.deleteDocument(
         conf.appwriteDatabaseID,
-        conf.appwriteCollectionID,
+        conf.appwriteArticlesCollectionID,
         slug
       );
     } catch (error) {
@@ -93,7 +94,7 @@ export class Service {
     try {
       return await this.databases.getDocument(
         conf.appwriteDatabaseID,
-        conf.appwriteCollectionID,
+        conf.appwriteArticlesCollectionID,
         slug
       );
     } catch (error) {
@@ -105,7 +106,7 @@ export class Service {
     try {
       return await this.databases.listDocuments(
         conf.appwriteDatabaseID,
-        conf.appwriteCollectionID,
+        conf.appwriteArticlesCollectionID,
         queries
       );
     } catch (error) {
@@ -113,6 +114,17 @@ export class Service {
     }
   }
 
+  async getAuthor(userId: string) {
+    try {
+      return await this.databases.getDocument(
+        conf.appwriteDatabaseID,
+        conf.appwriteUsersCollectionID,
+        userId
+      );
+    } catch (error) {
+      throwError(error as AppwriteException);
+    }
+  }
   //   file upload service
   async uploadFile(file: File) {
     try {

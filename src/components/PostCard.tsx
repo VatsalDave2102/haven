@@ -1,16 +1,25 @@
 import { Link } from "react-router-dom";
 import appwriteService from "../appwrite/config";
+import timesago from "timesago";
 
 interface Props {
   $id: string;
   title: string;
   featuredImage: string;
+  createdAt: string;
+  author: string;
 }
 
-const PostCard: React.FC<Props> = ({ $id, title, featuredImage }) => {
+const PostCard: React.FC<Props> = ({
+  $id,
+  title,
+  featuredImage,
+  createdAt,
+  author,
+}) => {
   return (
     <Link to={`/post/${$id}`}>
-      <div className="card relative w-full h-60 rounded-sm bg-secondary">
+      <div className="card relative w-full h-64 rounded-sm bg-secondary">
         <div className="w-full">
           <img
             src={String(appwriteService.getFilePreview(featuredImage))}
@@ -18,10 +27,14 @@ const PostCard: React.FC<Props> = ({ $id, title, featuredImage }) => {
             className="rounded-t-sm object-cover w-full h-40"
           />
         </div>
-        <div className="card_body">
-          <h3 className="card_title mt-2 ml-2 font-bold capitalize text-2xl text-primary">
+        <div className="card_body mt-2 mx-2">
+          <h3 className="card_title font-bold capitalize text-2xl text-primary truncate">
             {title}
           </h3>
+          <p className="author text-primary">By {author}</p>
+          <p className="text-primary text-xs text-opacity-80">
+            {timesago(createdAt)}
+          </p>
         </div>
       </div>
     </Link>

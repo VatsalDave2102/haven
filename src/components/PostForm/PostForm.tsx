@@ -64,6 +64,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
         const dbPost = await appwriteService.createPost({
           ...data,
           userId: String(userData?.$id),
+          userName: String(userData?.name),
         });
 
         if (dbPost) {

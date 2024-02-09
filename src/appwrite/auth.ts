@@ -1,10 +1,11 @@
-import { Account, AppwriteException, Client, ID } from "appwrite";
+import { Account, AppwriteException, Client, Databases, ID } from "appwrite";
 import conf from "../conf/conf";
 import { throwError } from "./error";
 
 export class AuthService {
   client = new Client();
   account;
+  databases;
 
   constructor() {
     this.client
@@ -12,6 +13,7 @@ export class AuthService {
       .setProject(conf.appwriteProjectID);
 
     this.account = new Account(this.client);
+    this.databases = new Databases(this.client);
   }
 
   async createAccount({
@@ -32,6 +34,12 @@ export class AuthService {
       );
 
       if (userAccount) {
+        await this.databases.createDocument(
+          conf.appwriteDatabaseID,
+          conf.appwriteUsersCollectionID,
+          userAccount.$id,
+          { name, email }
+        );
         // call another method
         return this.login({ email, password });
       } else {
