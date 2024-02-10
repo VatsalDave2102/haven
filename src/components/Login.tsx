@@ -40,16 +40,17 @@ const Login = () => {
   };
   return (
     <div className="flex items-center justify-center w-full">
-      <div className="mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10">
-        <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-[100px]">
-            <Logo width="100" />
-          </span>
+      <div className="mx-auto w-full max-w-sm md:max-w-lg bg-secondary rounded-xl p-10 border-r-2 border-b-2 border-pink-400">
+        <div className="mb-2 flex gap-1 justify-center items-center">
+          <Logo />
+          <h1 className="font-bold text-3xl text-primary tracking-wide ">
+            aven
+          </h1>
         </div>
-        <h2 className="text-center text-2xl font-bold">
+        <h2 className="text-center text-xl md:text-2xl font-bold text-primary">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <p className="mt-2 text-center text-base text-pink-400">
           Don&apos;t have any account?&nbsp;
           <Link
             to={"/signup"}
@@ -86,7 +87,11 @@ const Login = () => {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="w-full text-white"
+              bgColor="bg-primary hover:bg-primary/80 duration-300"
+            >
               Sign in
             </Button>
           </div>

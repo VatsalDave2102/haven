@@ -6,6 +6,7 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useAppSelector } from "../store/hooks";
+import timesago from "timesago";
 
 type Post = PostValues & Models.Document;
 
@@ -36,31 +37,51 @@ const Post = () => {
   return post ? (
     <div className="py-8">
       <Container>
-        <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-          <img
-            src={String(
-              appwriteService.getFilePreview(post.featuredImage as string)
-            )}
-            alt={post?.title}
-            className="rounded-xl"
-          />
-
+        <div className="p-3 w-full bg-secondary">
+          <p className="pl-1 text-primary font-semibold uppercase text-xs md:text-sm">
+            {timesago(post.$createdAt)}
+          </p>
+          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-3 text-pretty">
+            {post.title}
+          </h1>
+          <h4 className="pl-1 font-semibold text-primary uppercase mb-3 text-sm md:text-base">
+            - {post.userName}
+          </h4>
+          <div className="w-11/12 mx-auto h-80 mb-4 relative rounded-sm">
+            <img
+              src={appwriteService
+                .getFilePreview(post.featuredImage)
+                .toString()}
+              alt={post?.title}
+              className="rounded-sm w-full h-80 object-cover"
+            />
+          </div>
+          <div className="w-11/12 mb-6 px-1 mx-auto">
+            <article className="browser-css text-pretty text-base md:text-xl">
+              {parse(post.content)}
+            </article>
+          </div>
           {isAuthor && (
-            <div className="absolute right-6 top-6">
+            <div className="flex gap-2 justify-center">
               <Link to={`/edit-post/${post.$id}`}>
-                <Button bgColor="bg-green-500" className="mr-3">
+                <Button
+                  bgColor="bg-primary"
+                  textColor="text-white"
+                  className="hover:bg-primary/90"
+                >
                   Edit
                 </Button>
               </Link>
-              <Button className="bg-red-500" onClick={deletePost}>
+              <Button
+                textColor="text-white"
+                bgColor="bg-red-500"
+                className="hover:bg-red-500/90"
+                onClick={deletePost}
+              >
                 Delete
               </Button>
             </div>
           )}
-        </div>
-        <div className="w-full mb-6">
-          <h1 className="text-2xl font-bold">{post.title}</h1>
-          <div className="browser-css">{parse(post.content as string)}</div>
         </div>
       </Container>
     </div>

@@ -17,7 +17,11 @@ const RealTimeEditor: React.FC<Props> = ({
 }) => {
   return (
     <div className="w-full">
-      {label && <label className="inlince-block mb-1 pl-1">{label}</label>}
+      {label && (
+        <label className="inline-block mb-1 pl-1 text-primary font-semibold">
+          {label}
+        </label>
+      )}
       <Controller
         name="content"
         control={control}

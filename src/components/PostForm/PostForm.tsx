@@ -15,21 +15,29 @@ export interface PostValues {
   featuredImage: string;
   status: string;
   userId: string;
+  userName: string;
 }
 
 interface Props {
   post?: PostValues & Models.Document;
 }
 const PostForm: React.FC<Props> = ({ post }) => {
-  const { register, handleSubmit, watch, setValue, control, getValues } =
-    useForm<PostValues>({
-      defaultValues: {
-        title: post?.title || "",
-        slug: post?.$id || "",
-        content: post?.content || "",
-        status: post?.status || "active",
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    control,
+    getValues,
+    formState: { errors },
+  } = useForm<PostValues>({
+    defaultValues: {
+      title: post?.title || "",
+      slug: post?.$id || "",
+      content: post?.content || "",
+      status: post?.status || "active",
+    },
+  });
 
   const navigate = useNavigate();
   const userData = useAppSelector((state) => state.auth.userData);
@@ -100,65 +108,76 @@ const PostForm: React.FC<Props> = ({ post }) => {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
-        <Input
-          label="Title: "
-          placeholder="Title"
-          className="mb-4"
-          {...register("title", { required: true })}
-        />
-        <Input
-          label="Slug: "
-          placeholder="Slug"
-          className="mb-4"
-          {...register("slug", { required: true })}
-          onInput={(e) => {
-            setValue("slug", slugTransform(e.currentTarget.value), {
-              shouldValidate: true,
-            });
-          }}
-        />
+    <div className="bg-secondary rounded-sm p-4 shadow">
+      <h1 className="text-2xl font-bold text-primary mb-2">Add details</h1>
+      <form onSubmit={handleSubmit(submit)} className="flex flex-wrap gap-1">
+        <div className="w-full">
+          <Input
+            label="Title: "
+            placeholder="Title"
+            className={`mb-4 ${
+              errors.title && "focus:ring-2 focus:ring-red-500 ring-inset"
+            }`}
+            {...register("title", { required: true })}
+          />
+          <Input
+            label="Slug: "
+            placeholder="Slug"
+            className={`mb-4 ${
+              errors.title && "focus:ring-2 focus:ring-red-500 ring-inset"
+            }`}
+            {...register("slug", { required: true })}
+            onInput={(e) => {
+              setValue("slug", slugTransform(e.currentTarget.value), {
+                shouldValidate: true,
+              });
+            }}
+          />
+        </div>
+        <div className="w-full">
+          <Input
+            label="Featured Image: "
+            type="file"
+            className={`mb-4 ${
+              errors.title && "focus:ring-2 focus:ring-red-500 ring-inset"
+            }`}
+            accept="image/png , image/jpg, image/jpeg, image/gif"
+            {...register("imageFile", {
+              required: !post,
+            })}
+          />
+          {post && (
+            <div className="w-full h-80  mb-4 mx-auto">
+              <img
+                src={appwriteService
+                  .getFilePreview(post.featuredImage)
+                  .toString()}
+                alt={post.title}
+                className="rounded-sm h-80 w-full object-cover"
+              />
+            </div>
+          )}
+          <Select
+            options={["active", "inactive"]}
+            label="Status:"
+            className="mb-4"
+            {...register("status", { required: true })}
+          />
+        </div>
         <RealTimeEditor
           label="Content: "
           defaultValue={getValues("content")}
           control={control}
         />
-      </div>
-      <div className="w-1/3 px-2">
-        <Input
-          label="Featured Image: "
-          type="file"
-          className="mb-4"
-          accept="image/png , image/jpg, image/jpeg, image/gif"
-          {...register("imageFile", {
-            required: !post,
-          })}
-        />
-        {post && (
-          <div className="w-full mb-4">
-            <img
-              src={String(appwriteService.getFilePreview(post.featuredImage))}
-              alt={post.title}
-              className="rounded-lg"
-            />
-          </div>
-        )}
-        <Select
-          options={["active", "inactive"]}
-          label="Status"
-          className="mb-4"
-          {...register("status", { required: true })}
-        />
         <Button
           type="submit"
-          bgColor={post ? "bg-green-500" : undefined}
-          className="w-full"
+          className=" text-white mt-2 hover:bg-primary/90 duration-300"
+          bgColor="bg-primary"
         >
           {post ? "Update" : "Submit"}
         </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

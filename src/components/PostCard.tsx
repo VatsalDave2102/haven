@@ -22,8 +22,9 @@ const PostCard: React.FC<Props> = ({
       <div className="card relative w-full h-64 rounded-sm bg-secondary">
         <div className="w-full">
           <img
-            src={String(appwriteService.getFilePreview(featuredImage))}
+            src={appwriteService.getFilePreview(featuredImage).toString()}
             alt={title}
+            loading="lazy"
             className="rounded-t-sm object-cover w-full h-40"
           />
         </div>

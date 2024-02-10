@@ -12,7 +12,7 @@ const Button: React.FC<
 > = ({ children, bgColor, textColor, className, ...props }) => {
   return (
     <button
-      className={`px-4 py-2 rounded-lg ${bgColor} ${textColor} ${className}`}
+      className={`px-4 py-2 rounded-sm font-semibold ${bgColor} ${textColor} ${className}`}
       {...props}
     >
       {children}
