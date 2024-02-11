@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
-import appwriteService from "../appwrite/config";
 import { Container, PostCard } from "../components";
-import { Models } from "appwrite";
+import { useAppSelector } from "../store/hooks";
 
 const AllPosts = () => {
-  const [posts, setPosts] = useState<Models.Document[]>([]);
+  const posts = useAppSelector((state) => state.post.posts);
 
-  useEffect(() => {
-    let ignore = false;
-    async function fetchPosts() {
-      const posts = await appwriteService.getPosts([]);
-      if (posts && !ignore) {
-        setPosts(posts.documents);
-      }
-    }
-    fetchPosts();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
+  if (!posts) {
+    return (
+      <div>
+        <Container>
+          <div className="flex flex-wrap h-screen">
+            <div className="p-2 full">
+              <h1 className="text-2xl font-bold hover:text-gray-500">
+                Login to read posts
+              </h1>
+            </div>
+          </div>
+        </Container>
+      </div>
+    );
+  }
   return (
     <div className="w-full py-8">
       <Container>

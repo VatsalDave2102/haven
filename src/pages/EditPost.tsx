@@ -1,38 +1,21 @@
-import { useEffect, useState } from "react";
 import { Container, PostForm } from "../components";
-import appwriteService from "../appwrite/config";
 import { useNavigate, useParams } from "react-router-dom";
-import { Models } from "appwrite";
-import { PostValues } from "../components/PostForm/PostForm";
-
-type Post = PostValues & Models.Document;
+import { Post } from "../store/postSlice";
+import { useAppSelector } from "../store/hooks";
 
 const EditPost = () => {
-  const [post, setPost] = useState<Post>();
+  const posts = useAppSelector((state) => state.post.posts);
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let ignore = false;
+  const post = posts?.find((post) => post.$id === slug);
+  const userData = useAppSelector((state) => state.auth.userData);
 
-    async function fetchPost() {
-      if (slug) {
-        const post = await appwriteService.getPost(slug);
+  const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-        if (post && !ignore) {
-          setPost(post as Post);
-        }
-      } else {
-        navigate("/");
-      }
-    }
-    fetchPost();
-
-    return () => {
-      ignore = true;
-    };
-  }, [slug, navigate]);
-
+  if (!isAuthor) {
+    navigate("/");
+  }
   return post ? (
     <div className="py-8">
       <Container>

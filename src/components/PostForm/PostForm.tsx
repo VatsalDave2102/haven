@@ -3,24 +3,15 @@ import { useForm } from "react-hook-form";
 import { Button, Input, RealTimeEditor, Select } from "../index";
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../store/hooks";
-import { Models } from "appwrite";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import toast from "react-hot-toast";
-
-export interface PostValues {
-  title: string;
-  slug: string;
-  content: string;
-  imageFile: FileList;
-  featuredImage: string;
-  status: string;
-  userId: string;
-  userName: string;
-}
+import { Post, PostValues, addPost, updatePost } from "../../store/postSlice";
+import { AppwriteException } from "appwrite";
 
 interface Props {
-  post?: PostValues & Models.Document;
+  post?: Post;
 }
+
 const PostForm: React.FC<Props> = ({ post }) => {
   const {
     register,
@@ -40,6 +31,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
   });
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.auth.userData);
 
   const submit = async (data: PostValues) => {
@@ -58,6 +50,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
       });
 
       if (dbPost) {
+        dispatch(updatePost(dbPost as Post));
         toast.success("Article updated!");
         navigate(`/post/${dbPost.$id}`);
       }
@@ -69,16 +62,22 @@ const PostForm: React.FC<Props> = ({ post }) => {
       if (file) {
         const fileId = file.$id;
         data.featuredImage = fileId;
-        const dbPost = await appwriteService.createPost({
-          ...data,
-          userId: String(userData?.$id),
-          userName: String(userData?.name),
-        });
+        try {
+          const dbPost = await appwriteService.createPost({
+            ...data,
+            userId: String(userData?.$id),
+            userName: String(userData?.name),
+          });
 
-        if (dbPost) {
-          toast.success("Article added!");
+          if (dbPost) {
+            dispatch(addPost(dbPost as Post));
+            toast.success("Article added!");
 
-          navigate(`/post/${dbPost.$id}`);
+            navigate(`/post/${dbPost.$id}`);
+          }
+        } catch (error) {
+          const newError = error as AppwriteException;
+          toast.error(newError.message);
         }
       }
     }

@@ -1,8 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
-import { PostValues } from "./PostForm/PostForm";
-Controller;
+import { PostValues } from "../store/postSlice";
 
 interface Props {
   control: Control<PostValues, unknown, PostValues>;

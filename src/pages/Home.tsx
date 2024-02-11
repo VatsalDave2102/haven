@@ -1,26 +1,10 @@
-import { useEffect, useState } from "react";
-import appwriteService from "../appwrite/config";
 import { Container, PostCard } from "../components";
-import { Models } from "appwrite";
+import { useAppSelector } from "../store/hooks";
 
 const Home = () => {
-  const [posts, setPosts] = useState<Models.Document[]>([]);
+  const posts = useAppSelector((state) => state.post.posts);
 
-  useEffect(() => {
-    let ignore = false;
-    async function fetchPosts() {
-      const posts = await appwriteService.getPosts([]);
-      if (posts && !ignore) {
-        setPosts(posts.documents);
-      }
-    }
-    fetchPosts();
-    return () => {
-      ignore = true;
-    };
-  }, []);
-
-  if (posts.length === 0) {
+  if (!posts) {
     return (
       <div>
         <Container>

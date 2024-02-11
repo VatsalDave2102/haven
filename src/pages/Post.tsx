@@ -1,35 +1,27 @@
-import { Models } from "appwrite";
-import { PostValues } from "../components/PostForm/PostForm";
-import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import timesago from "timesago";
-
-type Post = PostValues & Models.Document;
+import { deletePost } from "../store/postSlice";
 
 const Post = () => {
-  const [post, setPost] = useState<Post>();
+  const posts = useAppSelector((state) => state.post.posts);
   const { slug } = useParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const post = posts?.find((post) => post.$id === slug);
 
   const userData = useAppSelector((state) => state.auth.userData);
+
   const isAuthor = post && userData ? post.userId === userData.$id : false;
 
-  useEffect(() => {
-    if (slug) {
-      appwriteService.getPost(slug).then((post) => {
-        if (post) setPost(post as Post);
-        else navigate("/");
-      });
-    } else navigate("/");
-  }, [slug, navigate]);
-
-  const deletePost = async () => {
+  const handleDelete = async () => {
     const result = await appwriteService.deletePost(post?.$id as string);
     if (result) {
+      dispatch(deletePost(post?.$id as string));
       await appwriteService.deleteFile(post?.featuredImage as string);
       navigate("/");
     }
@@ -50,8 +42,9 @@ const Post = () => {
           <div className="w-11/12 mx-auto h-80 mb-4 relative rounded-sm">
             <img
               src={appwriteService
-                .getFilePreview(post.featuredImage)
+                .getFilePreview(post?.featuredImage as string)
                 .toString()}
+              loading="lazy"
               alt={post?.title}
               className="rounded-sm w-full h-80 object-cover"
             />
@@ -76,7 +69,7 @@ const Post = () => {
                 textColor="text-white"
                 bgColor="bg-red-500"
                 className="hover:bg-red-500/90"
-                onClick={deletePost}
+                onClick={handleDelete}
               >
                 Delete
               </Button>
