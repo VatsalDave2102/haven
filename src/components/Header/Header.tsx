@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Container, Logo, LogoutBtn } from "..";
 import { useAppSelector } from "../../store/hooks";
+import DarkModeButton from "./DarkModeButton";
 
 const Header = () => {
   const authStatus = useAppSelector((state) => state.auth.status);
-
+  const location = useLocation();
+  const endpoint = location.pathname;
   const navigate = useNavigate();
 
   const navItems = [
@@ -16,24 +18,29 @@ const Header = () => {
   ];
 
   return (
-    <header className="py-3 shadow bg-secondary">
+    <header className="py-3 shadow bg-secondary dark:bg-slate-900">
       <Container>
         <nav className="flex items-center">
-          <div className="">
+          <div className="mr-auto">
             <Link to="/" className="flex items-center gap-1">
               <Logo />
-              <h1 className="font-bold text-3xl text-primary tracking-wide ">
+              <h1 className="font-bold text-3xl text-primary dark:text-pink-400 tracking-wide ">
                 aven
               </h1>
             </Link>
           </div>
-          <ul className="flex ml-auto gap-6 navbar_list py-2">
+          <DarkModeButton />
+          <ul className="flex gap-6 navbar_list py-2">
             {navItems.map((item) =>
               item.active ? (
                 <li key={item.name}>
                   <button
                     onClick={() => navigate(item.slug)}
-                    className="navbar_button"
+                    className={`navbar_button ${
+                      endpoint === item.slug
+                        ? "text-primary dark:text-pink-400"
+                        : "text-slate-400 dark:text-secondary"
+                    }`}
                   >
                     {item.name}
                   </button>

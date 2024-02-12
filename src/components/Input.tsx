@@ -13,7 +13,7 @@ const Input = forwardRef<
     <div className="w-full">
       {label && (
         <label
-          className="inline-block mb-1 pl-1 text-primary font-semibold"
+          className="inline-block mb-1 pl-1 text-primary dark:text-secondary font-semibold"
           htmlFor={id}
         >
           {label}
@@ -21,7 +21,7 @@ const Input = forwardRef<
       )}
       <input
         type={type}
-        className={` ${className} px-3 py-2 rounded-sm bg-white text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 w-full focus:ring-2 focus:ring-pink-400 ring-inset`}
+        className={` ${className} px-3 py-2 rounded-sm bg-white dark:bg-slate-800 text-black dark:text-white outline-none duration-200 border border-gray-200 w-full focus:ring-2 focus:ring-pink-400 ring-inset`}
         ref={ref}
         {...props}
         id={id}

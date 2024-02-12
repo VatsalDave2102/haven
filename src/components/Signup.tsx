@@ -41,21 +41,21 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center w-full">
-      <div className="mx-auto w-full max-w-sm md:max-w-lg bg-secondary rounded-xl p-10 border-r-2 border-b-2 border-pink-400">
+      <div className="mx-auto w-full max-w-sm md:max-w-lg bg-secondary dark:bg-slate-900 rounded-xl p-10 border-r-2 border-b-2 border-pink-400">
         <div className="mb-2 flex gap-1 justify-center items-center">
           <Logo />
-          <h1 className="font-bold text-3xl text-primary tracking-wide ">
+          <h1 className="font-bold text-3xl text-primary dark:text-pink-400 tracking-wide ">
             aven
           </h1>
         </div>
-        <h2 className="text-center text-xl md:text-2xl font-bold text-primary">
+        <h2 className="text-center text-xl md:text-2xl font-bold text-primary dark:text-pink-400">
           Sign up to create your account
         </h2>
-        <p className="mt-2 text-center text-sm md:text-base text-pink-400">
+        <p className="mt-2 text-center text-sm md:text-base text-pink-400 dark:text-secondary">
           Already have an account?&nbsp;
           <Link
             to={"/login"}
-            className="font-medium text-primary transition-all duration-200 hover:underline"
+            className="font-medium text-primary dark:text-pink-400 transition-all duration-200 hover:underline"
           >
             Log in
           </Link>
@@ -99,7 +99,7 @@ const Signup = () => {
             <Button
               type="submit"
               className="w-full text-white"
-              bgColor="bg-primary hover:bg-primary/80 duration-300"
+              bgColor="bg-primary hover:bg-primary/80 dark:hover:primary/70 duration-300"
             >
               Create account
             </Button>

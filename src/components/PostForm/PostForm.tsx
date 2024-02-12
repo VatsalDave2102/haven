@@ -107,8 +107,10 @@ const PostForm: React.FC<Props> = ({ post }) => {
   }, [watch, slugTransform, setValue]);
 
   return (
-    <div className="bg-secondary rounded-sm p-4 shadow">
-      <h1 className="text-2xl font-bold text-primary mb-2">Add details</h1>
+    <div className="bg-secondary dark:bg-slate-900 rounded-sm p-4 shadow">
+      <h1 className="text-2xl font-bold text-primary dark:text-pink-400 mb-2">
+        Add details
+      </h1>
       <form onSubmit={handleSubmit(submit)} className="flex flex-wrap gap-1">
         <div className="w-full">
           <Input
@@ -170,7 +172,7 @@ const PostForm: React.FC<Props> = ({ post }) => {
         />
         <Button
           type="submit"
-          className=" text-white mt-2 hover:bg-primary/90 duration-300"
+          className=" text-white mt-2 hover:bg-primary/80 dark:hover:bg-primary/70 duration-300"
           bgColor="bg-primary"
         >
           {post ? "Update" : "Submit"}

@@ -17,7 +17,7 @@ const RealTimeEditor: React.FC<Props> = ({
   return (
     <div className="w-full">
       {label && (
-        <label className="inline-block mb-1 pl-1 text-primary font-semibold">
+        <label className="inline-block mb-1 pl-1 text-primary dark:text-secondary font-semibold">
           {label}
         </label>
       )}
@@ -57,7 +57,7 @@ const RealTimeEditor: React.FC<Props> = ({
                 "alignright alignjustify | bullist numlist outdent indent | " +
                 "removeformat | help",
               content_style:
-                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                " body{ font-family:Helvetica,Arial,sans-serif; font-size:14px; } ",
             }}
             onEditorChange={onChange}
           />

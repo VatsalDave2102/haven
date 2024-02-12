@@ -14,7 +14,10 @@ const LogoutBtn = () => {
   };
 
   return (
-    <button className="navbar_button" onClick={handleLogout}>
+    <button
+      className="navbar_button text-slate-400 dark:text-secondary"
+      onClick={handleLogout}
+    >
       Logout
     </button>
   );

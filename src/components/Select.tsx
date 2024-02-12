@@ -15,7 +15,7 @@ const Select = forwardRef<
       {label && (
         <label
           htmlFor={id}
-          className="inline-block mb-1 pl-1 text-primary font-semibold"
+          className="inline-block mb-1 pl-1 text-primary dark:text-secondary font-semibold"
         >
           {label}
         </label>
@@ -25,7 +25,7 @@ const Select = forwardRef<
         {...props}
         id={id}
         ref={ref}
-        className={`px-3 py-2 rounded-sm bg-white text-primary outline-none focus:bg-gray-50 duration-200 border border-gray-200 focus:ring-2 focus:ring-pink-400 ring-inset w-full block cursor-pointer ${className}`}
+        className={`px-3 py-2 rounded-sm bg-white dark:bg-slate-800 text-primary dark:text-white outline-none duration-200 border border-gray-200 focus:ring-4 focus:ring-pink-400 ring-inset w-full block cursor-pointer ${className}`}
       >
         {options?.map((option) => (
           <option key={option} value={option} className="rounded-sm">

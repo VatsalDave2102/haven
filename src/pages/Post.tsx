@@ -29,14 +29,14 @@ const Post = () => {
   return post ? (
     <div className="py-8">
       <Container>
-        <div className="p-3 w-full bg-secondary">
-          <p className="pl-1 text-primary font-semibold uppercase text-xs md:text-sm">
+        <div className="p-3 w-full bg-secondary dark:bg-slate-900">
+          <p className="pl-1 text-primary dark:text-secondary font-semibold uppercase text-xs md:text-sm">
             {timesago(post.$createdAt)}
           </p>
-          <h1 className="text-3xl md:text-5xl font-bold text-primary mb-3 text-pretty">
+          <h1 className="text-3xl md:text-5xl font-bold text-primary dark:text-secondary mb-3 text-pretty">
             {post.title}
           </h1>
-          <h4 className="pl-1 font-semibold text-primary uppercase mb-3 text-sm md:text-base">
+          <h4 className="pl-1 font-semibold text-primary dark:text-secondary uppercase mb-3 text-sm md:text-base">
             - {post.userName}
           </h4>
           <div className="w-11/12 mx-auto h-80 mb-4 relative rounded-sm">
@@ -50,7 +50,7 @@ const Post = () => {
             />
           </div>
           <div className="w-11/12 mb-6 px-1 mx-auto">
-            <article className="browser-css text-pretty text-base md:text-xl">
+            <article className="browser-css text-pretty text-base md:text-xl dark:text-white">
               {parse(post.content)}
             </article>
           </div>
@@ -60,7 +60,7 @@ const Post = () => {
                 <Button
                   bgColor="bg-primary"
                   textColor="text-white"
-                  className="hover:bg-primary/90"
+                  className="hover:bg-primary/80 dark:hover:bg-primary/70 duration-300"
                 >
                   Edit
                 </Button>
@@ -68,7 +68,7 @@ const Post = () => {
               <Button
                 textColor="text-white"
                 bgColor="bg-red-500"
-                className="hover:bg-red-500/90"
+                className="hover:bg-red-500/80 dark:hover:bg-red-500/70 duration-300"
                 onClick={handleDelete}
               >
                 Delete
