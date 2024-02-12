@@ -1,4 +1,5 @@
 import { Container, PostCard } from "../components";
+import Loader from "../components/Loader";
 import { useAppSelector } from "../store/hooks";
 
 const Home = () => {
@@ -6,16 +7,8 @@ const Home = () => {
 
   if (!posts) {
     return (
-      <div>
-        <Container>
-          <div className="flex flex-wrap h-screen">
-            <div className="p-2 full">
-              <h1 className="text-2xl font-bold hover:text-gray-500">
-                Login to read posts
-              </h1>
-            </div>
-          </div>
-        </Container>
+      <div className="h-screen">
+        <Loader />
       </div>
     );
   }
@@ -34,6 +27,7 @@ const Home = () => {
                 featuredImage={post.featuredImage}
                 createdAt={post.$createdAt}
                 author={post.userName}
+                view="card"
               />
             </div>
           ))}

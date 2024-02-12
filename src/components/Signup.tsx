@@ -38,6 +38,7 @@ const Signup = () => {
       toast.error(toastError.message);
     }
   };
+
   return (
     <div className="flex items-center justify-center w-full">
       <div className="mx-auto w-full max-w-sm md:max-w-lg bg-secondary rounded-xl p-10 border-r-2 border-b-2 border-pink-400">

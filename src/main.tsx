@@ -22,7 +22,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: (
+          <Protected authentication={false}>
+            <Home />
+          </Protected>
+        ),
       },
       {
         path: "/login",

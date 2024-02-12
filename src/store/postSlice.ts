@@ -40,9 +40,8 @@ const postSlice = createSlice({
     updatePost: (state, action: PayloadAction<Post>) => {
       if (state.posts) {
         const postIndex = state.posts.findIndex(
-          (post) => post.id === action.payload.id
+          (post) => post.$id === action.payload.$id
         );
-
         state.posts[postIndex] = action.payload;
       }
     },

@@ -9,7 +9,7 @@ interface Props {
 
 const Protected: React.FC<Props> = ({ children, authentication }) => {
   const navigate = useNavigate();
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const authStatus = useAppSelector((state) => state.auth.status);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const Protected: React.FC<Props> = ({ children, authentication }) => {
     }
     setLoader(false);
   }, [authStatus, navigate, authentication]);
-  return loader ? <h1>Loading...</h1> : <>{children}</>;
-};
 
+  return loader ? <h1>Loading</h1> : <>{children}</>;
+};
 export default Protected;
