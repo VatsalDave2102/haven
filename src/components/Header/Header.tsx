@@ -1,22 +1,16 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Container, Logo, LogoutBtn } from "..";
-import { useAppSelector } from "../../store/hooks";
+import { Link } from "react-router-dom";
+import { Container, Logo } from "..";
 import DarkModeButton from "./DarkModeButton";
+import NavList from "./NavList";
+import Sidebar from "./Sidebar";
+import { useState } from "react";
 
 const Header = () => {
-  const authStatus = useAppSelector((state) => state.auth.status);
-  const location = useLocation();
-  const endpoint = location.pathname;
-  const navigate = useNavigate();
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-  const navItems = [
-    { name: "Home", slug: "/", active: true },
-    { name: "Login", slug: "/login", active: !authStatus },
-    { name: "Signup", slug: "/signup", active: !authStatus },
-    { name: "All Posts", slug: "/all-posts", active: authStatus },
-    { name: "Add Post", slug: "/add-post", active: authStatus },
-  ];
-
+  const handleOpen = () => {
+    setSidebarOpen(true);
+  };
   return (
     <header className="py-3 shadow bg-secondary dark:bg-slate-900">
       <Container>
@@ -30,29 +24,16 @@ const Header = () => {
             </Link>
           </div>
           <DarkModeButton />
-          <ul className="flex gap-6 navbar_list py-2">
-            {navItems.map((item) =>
-              item.active ? (
-                <li key={item.name}>
-                  <button
-                    onClick={() => navigate(item.slug)}
-                    className={`navbar_button ${
-                      endpoint === item.slug
-                        ? "text-primary dark:text-pink-400"
-                        : "text-slate-400 dark:text-secondary"
-                    }`}
-                  >
-                    {item.name}
-                  </button>
-                </li>
-              ) : null
-            )}
-            {authStatus && (
-              <li>
-                <LogoutBtn />
-              </li>
-            )}
-          </ul>
+          <NavList sidebar={false} />
+          <button
+            className="rounded-full hover:bg-primary/40 dark:hover:bg-pink-400/40 flex items-center p-2 duration-300 md:hidden"
+            onClick={handleOpen}
+          >
+            <span className="material-symbols-outlined text-primary dark:text-secondary">
+              menu
+            </span>
+          </button>
+          <Sidebar isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />
         </nav>
       </Container>
     </header>
