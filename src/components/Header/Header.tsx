@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { Container, Logo } from "..";
-import DarkModeButton from "./DarkModeButton";
-import NavList from "./NavList";
-import Sidebar from "./Sidebar";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Container, Logo } from "@components/index";
+import DarkModeButton from "@components/Header/DarkModeButton";
+import Sidebar from "@components/Header/Sidebar";
+import NavList from "@components/Header/NavList";
 
 const Header = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

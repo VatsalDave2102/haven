@@ -1,10 +1,11 @@
-import LogoutBtn from "../Header/LogoutBtn";
-import { useAppSelector } from "../../store/hooks";
+import LogoutBtn from "@components/Header/LogoutBtn";
+import { useAppSelector } from "@store/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface NavListProps {
   sidebar: boolean;
 }
+
 const NavList: React.FC<NavListProps> = ({ sidebar }) => {
   const authStatus = useAppSelector((state) => state.auth.status);
   const location = useLocation();

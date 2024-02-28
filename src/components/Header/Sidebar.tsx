@@ -1,4 +1,4 @@
-import NavList from "./NavList";
+import NavList from "@components/Header/NavList";
 
 interface SidebarProps {
   isOpen: boolean;

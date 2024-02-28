@@ -1,4 +1,4 @@
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector } from "@store/hooks";
 
 const Logo = () => {
   const darkMode = useAppSelector((state) => state.view.darkMode);

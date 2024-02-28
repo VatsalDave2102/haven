@@ -1,6 +1,5 @@
-import { Container, PostCard } from "../components";
-import Loader from "../components/Loader";
-import { useAppSelector } from "../store/hooks";
+import { Container, PostCard, Loader } from "@components/index";
+import { useAppSelector } from "@store/hooks";
 
 const Home = () => {
   const posts = useAppSelector((state) => state.post.posts);

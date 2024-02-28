@@ -3,8 +3,8 @@ import Button from "./Button";
 import Container from "./Container/Container";
 import Footer from "./Footer/Footer";
 import Header from "./Header/Header";
-import LogoutBtn from "./Header/LogoutBtn";
 import Input from "./Input";
+import Loader from "./Loader";
 import Login from "./Login";
 import Logo from "./Logo";
 import PostCard from "./PostCard";
@@ -14,18 +14,18 @@ import Select from "./Select";
 import Signup from "./Signup";
 
 export {
-  Header,
-  Footer,
   Container,
-  Logo,
-  LogoutBtn,
-  Input,
-  PostCard,
-  Select,
-  Button,
-  Protected,
+  Footer,
+  Header,
   PostForm,
-  Signup,
+  Protected,
+  Button,
+  Input,
+  Loader,
   Login,
+  Logo,
+  PostCard,
   RealTimeEditor,
+  Select,
+  Signup,
 };

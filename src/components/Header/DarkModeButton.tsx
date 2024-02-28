@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setDarkMode } from "../../store/viewSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
+import { setDarkMode } from "@store/viewSlice";
 
 const DarkModeButton = () => {
   const darkMode = useAppSelector((state) => state.view.darkMode);

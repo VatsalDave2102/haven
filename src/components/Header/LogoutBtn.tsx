@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
-import authService from "../../appwrite/auth";
-import { logout } from "../../store/authSlice";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import authService from "@appwrite/auth";
+import { logout } from "@store/authSlice";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 
 const LogoutBtn = () => {
   const dispatch = useAppDispatch();

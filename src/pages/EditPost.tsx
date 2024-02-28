@@ -1,7 +1,7 @@
-import { Container, PostForm } from "../components";
+import { Container, PostForm } from "@components/index";
 import { useNavigate, useParams } from "react-router-dom";
-import { Post } from "../store/postSlice";
-import { useAppSelector } from "../store/hooks";
+import { Post } from "@store/postSlice";
+import { useAppSelector } from "@store/hooks";
 
 const EditPost = () => {
   const posts = useAppSelector((state) => state.post.posts);

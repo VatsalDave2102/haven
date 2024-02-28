@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Logo } from "../index";
+import { Logo } from "@components/index";
 
 const Footer = () => {
   const company = ["Features", "Pricing", "Affiliate Program", "Press Kit"];

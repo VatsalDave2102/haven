@@ -1,11 +1,11 @@
 import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Button, Input, RealTimeEditor, Select } from "../index";
-import appwriteService from "../../appwrite/config";
+import { Button, Input, RealTimeEditor, Select } from "@components/index";
+import appwriteService from "@appwrite/config";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import toast from "react-hot-toast";
-import { Post, PostValues, addPost, updatePost } from "../../store/postSlice";
+import { Post, PostValues, addPost, updatePost } from "@store/postSlice";
 import { AppwriteException } from "appwrite";
 
 interface Props {

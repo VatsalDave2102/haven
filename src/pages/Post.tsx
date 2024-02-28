@@ -1,10 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import appwriteService from "../appwrite/config";
-import { Button, Container } from "../components";
+import appwriteService from "@appwrite/config";
+import { Button, Container } from "@components/index";
 import parse from "html-react-parser";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import timesago from "timesago";
-import { deletePost } from "../store/postSlice";
+import { deletePost } from "@store/postSlice";
 
 const Post = () => {
   const posts = useAppSelector((state) => state.post.posts);

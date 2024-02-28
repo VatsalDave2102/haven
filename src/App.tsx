@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import authService from "./appwrite/auth";
-// import appwriteService from "./appwrite/config";
-import { login, logout } from "./store/authSlice";
-import { Footer, Header } from "./components";
-import { useAppDispatch, useAppSelector } from "./store/hooks";
+import authService from "@appwrite/auth";
+import { login, logout } from "@store/authSlice";
+import { Footer, Header, Loader } from "@components/index";
+import { useAppDispatch, useAppSelector } from "@store/hooks";
 import { Outlet } from "react-router-dom";
-// import { Post, setPosts } from "./store/postSlice";
-import Loader from "./components/Loader";
-import appwriteService from "./appwrite/config";
-import { Post, setPosts } from "./store/postSlice";
-import { setDarkMode } from "./store/viewSlice";
+import appwriteService from "@appwrite/config";
+import { Post, setPosts } from "@store/postSlice";
+import { setDarkMode } from "@store/viewSlice";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const dispatch = useAppDispatch();
   const darkMode = useAppSelector((state) => state.view.darkMode);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {

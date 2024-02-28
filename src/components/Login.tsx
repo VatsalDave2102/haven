@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { login as authLogin } from "../store/authSlice";
-import { Button, Input, Logo } from "./index";
-import authService from "../appwrite/auth";
+import { login as authLogin } from "@store/authSlice";
+import { Button, Input, Logo } from "@components/index";
+import authService from "@appwrite/auth";
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch } from "@store/hooks";
 import { AppwriteException } from "appwrite";
 import toast from "react-hot-toast";
 

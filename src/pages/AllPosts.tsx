@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Container, PostCard } from "../components";
-import Loader from "../components/Loader";
-import { useAppSelector } from "../store/hooks";
+import { Container, PostCard, Loader } from "@components/index";
+import { useAppSelector } from "@store/hooks";
 
 const AllPosts = () => {
   const posts = useAppSelector((state) => state.post.posts);

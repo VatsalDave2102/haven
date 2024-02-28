@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
+import { useAppSelector } from "@store/hooks";
 import { useEffect, useState } from "react";
 
 interface Props {

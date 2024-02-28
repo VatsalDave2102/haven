@@ -6,7 +6,7 @@ import {
   Query,
   AppwriteException,
 } from "appwrite";
-import conf from "../conf/conf";
+import conf from "@conf/conf";
 import { throwError } from "./error";
 
 export class Service {

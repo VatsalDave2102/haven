@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import appwriteService from "../appwrite/config";
+import appwriteService from "@appwrite/config";
 import timesago from "timesago";
 
 const CardContainer = ({
